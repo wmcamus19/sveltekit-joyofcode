@@ -1,0 +1,12 @@
+import db from '$lib/database';
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async ({ params }) => {
+	const post = await db.post.findMany();
+	if (!post) {
+		throw error(404, 'Post not found.');
+	}
+
+	return { post };
+};
